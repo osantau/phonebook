@@ -5,31 +5,41 @@
  */
 package oct.soft.db.util;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.beans.PropertyVetoException;
+
 import javax.sql.DataSource;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
  *
  * @author osantau
  */
 public class MyDataSource {
-    private static DataSource ds = null;
-    
-    public static DataSource getDataSource(){
-        try {
-            Context initialContext = new InitialContext();
-            Context envContext = (Context)initialContext.lookup("java:/comp/env");
-            if(ds==null) {
-                ds = (DataSource) envContext.lookup("jdbc/telefoane");
-            }            
-           
-        } catch (NamingException ex) {
-            Logger.getLogger(MyDataSource.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         return ds;
-    }
+	private static ComboPooledDataSource datasource = null;
+
+	public static DataSource getDataSource() {
+		if (datasource == null) {
+			datasource = new ComboPooledDataSource();
+			try {
+				datasource.setDriverClass("com.mysql.jdbc.Driver");
+			} catch (PropertyVetoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			datasource.setJdbcUrl("jdbc:mysql://localhost/telefoane");
+			datasource.setUser("root");
+			datasource.setPassword("root");
+
+			// Optional Settings
+			datasource.setInitialPoolSize(5);
+			datasource.setMinPoolSize(5);
+			datasource.setAcquireIncrement(5);
+			datasource.setMaxPoolSize(20);
+			datasource.setMaxStatements(100);
+			datasource.setPreferredTestQuery("SELECT 1");					
+		}
+
+		return datasource;
+	}
 }
