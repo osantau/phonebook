@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/telefoane">
+
+<Resource name="jdbc/telefoane" 
+      auth="Container" 
+      type="javax.sql.DataSource" 
+      driverClassName="com.mysql.jdbc.Driver" 
+      url="jdbc:mysql://localhost:3306/telefoane?SSL=false" 
+      username="root" 
+      password="root"             
+      maxTotal="100"
+      maxIdle="30"        
+      maxWaitMilis="10000"/>
+</Context>
+
