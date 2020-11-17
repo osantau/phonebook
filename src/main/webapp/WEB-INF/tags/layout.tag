@@ -1,4 +1,4 @@
-<%@tag description="Template" pageEncoding="UTF-8"%>
+<%@tag description="Template" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@attribute name="title"%>
 <%@attribute name="body_area" fragment="true" required="true"%>
 <!doctype html>
@@ -29,7 +29,7 @@
 			</h1>
 			<% if(session.getAttribute("username") != null) {%>
 			<div align="right" style="font-size: 14px;">
-				Logat ca: <b> <%= session.getAttribute("username") %>
+				Utilizator curent: <b> <%= session.getAttribute("username") %>
 				</b>
 			</div>
 			<% }%>
