@@ -22,12 +22,12 @@ public class MyDataSource {
 		if (datasource == null) {
 			datasource = new ComboPooledDataSource();
 			try {
-				datasource.setDriverClass("com.mysql.jdbc.Driver");
+				datasource.setDriverClass("com.mysql.cj.jdbc.Driver");
 			} catch (PropertyVetoException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			datasource.setJdbcUrl("jdbc:mysql://localhost/telefoane");
+			datasource.setJdbcUrl("jdbc:mysql://localhost/telefoane?useSSL=false");
 			datasource.setUser("root");
 			datasource.setPassword("root");
 
