@@ -5,9 +5,8 @@
  */
 package oct.soft.model;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -15,11 +14,12 @@ import org.hibernate.validator.constraints.Length;
  *
  * @author osantau
  */
+
 public class Office {
     private Integer idoffice;
-    @NotEmpty(message = "Campul Denumire este obligatoriu.")
-    @Min(value = 3, message = "Campul Denumire nu poate fi mai mic de 3 caractere.")
-    @Max(value = 45, message = "Campul Denumire nu poate avea mai mult de 45 caractere.")
+    @NotNull(message = "Introduceti o denumire !")
+    @NotEmpty(message = "Campul Denumire este obligatoriu !")
+    @Length(min = 3, max = 45, message = "Campul Denumire trebuie sa fie intre 3 si  45 caractere !")    
     private String name;
     private int isbranch;
     private int parent;
