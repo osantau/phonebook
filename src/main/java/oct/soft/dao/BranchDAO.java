@@ -7,6 +7,9 @@ package oct.soft.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.sql.DataSource;
+
 import oct.soft.db.util.MyDataSource;
 import oct.soft.model.Office;
 import org.apache.commons.dbutils.DbUtils;
@@ -21,8 +24,8 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 public class BranchDAO {
     private QueryRunner queryRunner;
     private String sql = "";
-    public BranchDAO() {
-          queryRunner = new QueryRunner(MyDataSource.getDataSource());
+    public BranchDAO(DataSource dataSource) {
+          queryRunner = new QueryRunner(dataSource);
     }
     
     public Office getBranch(int id) {

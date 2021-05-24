@@ -32,12 +32,14 @@ public class MyDataSource {
 			datasource.setPassword("root");
 
 			// Optional Settings
-			datasource.setInitialPoolSize(5);
-			datasource.setMinPoolSize(5);
-			datasource.setAcquireIncrement(5);
+			
+			datasource.setMinPoolSize(10);			
 			datasource.setMaxPoolSize(20);
-			datasource.setMaxStatements(100);
-			datasource.setPreferredTestQuery("SELECT 1");					
+			datasource.setAcquireIncrement(1);
+			datasource.setMaxStatements(50);
+			datasource.setIdleConnectionTestPeriod(3000);
+			datasource.setPreferredTestQuery("select version()");	
+			
 		}
 
 		return datasource;

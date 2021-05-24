@@ -6,13 +6,15 @@
 package oct.soft.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
 import oct.soft.dao.BranchDAO;
-import oct.soft.db.util.MyDataSource;
 import oct.soft.helpers.PagesHelper;
 import oct.soft.model.Office;
 import oct.soft.validator.MyValidator;
@@ -34,14 +36,15 @@ public class BranchServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
+	DataSource dataSource = null;
     @Override
     public void init()        
             throws ServletException {        
-        super.init(); //To change body of generated methods, choose Tools | Templates.
+    	dataSource = (DataSource) getServletContext().getAttribute("dataSource");
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BranchDAO branchDAO = new BranchDAO();        
+        BranchDAO branchDAO = new BranchDAO(dataSource);        
         String method = request.getMethod();
         String path = request.getServletPath();        
         if(method.equals("GET")) {
