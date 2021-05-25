@@ -23,13 +23,12 @@
 </tr>
 <tr>
 <td></td>
-					<td align="right"><input type="submit" value="Adauga" />&nbsp;
+		<td align="right"><input type="submit" value="Adauga / Actualizeaza" />&nbsp;
         <a href="<c:url value="branches"/>" style="text-decoration: none;">
             <input type="button" value="Cancel" /> 
                  </a> </td>
 </tr>
-</table>
-        
+</table>        
         </div>
     </form>
                             

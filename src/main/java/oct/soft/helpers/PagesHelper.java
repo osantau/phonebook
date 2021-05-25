@@ -11,7 +11,14 @@ package oct.soft.helpers;
  */
 public final class PagesHelper {
     public static final String LOGIN_PAGE="/WEB-INF/jsp/login.jsp";
+    //BRANCH
     public static final String BRANCH_LIST="/WEB-INF/jsp/branch-list.jsp";
     public static final String BRANCH_FORM="/WEB-INF/jsp/branch-form.jsp";
+    //OFFICE
+    public static final String OFFICE_LIST="/WEB-INF/jsp/office/office-list.jsp";
+    public static final String OFFICE_FORM="/WEB-INF/jsp/office/office-form.jsp";
     
+  //PERSON
+    public static final String PERSON_LIST="/WEB-INF/jsp/person/person-list.jsp";
+    public static final String PERSON_FORM="/WEB-INF/jsp/person/person-form.jsp";
 }

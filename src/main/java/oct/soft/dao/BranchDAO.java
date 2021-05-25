@@ -5,8 +5,11 @@
  */
 package oct.soft.dao;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
@@ -43,7 +46,7 @@ public class BranchDAO {
         try{
         BeanListHandler<Office> beanListHandler = new BeanListHandler<>(Office.class);
       
-        branches = queryRunner.query("SELECT * FROM office where isbranch=? and parent=?", beanListHandler,1,0);
+        branches = queryRunner.query("SELECT * FROM office where isbranch=? and parent=? ORDER BY name", beanListHandler,1,0);
         }catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -66,4 +69,5 @@ public class BranchDAO {
         }
         return branch;
     }
+       
 }

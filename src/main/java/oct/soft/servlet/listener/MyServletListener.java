@@ -65,8 +65,7 @@ public class MyServletListener implements ServletContextListener {
 				datasource.setAcquireIncrement(1);
 				datasource.setMaxStatements(50);
 				datasource.setIdleConnectionTestPeriod(3000);
-				datasource.setPreferredTestQuery("select version()");
-
+				datasource.setPreferredTestQuery("select 1");
 				application.setAttribute("dataSource", datasource);
 			} catch (PropertyVetoException ex) {
 				// TODO Auto-generated catch block

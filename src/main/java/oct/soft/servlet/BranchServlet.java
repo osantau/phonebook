@@ -37,14 +37,15 @@ public class BranchServlet extends HttpServlet {
      */
     
 	DataSource dataSource = null;
+	   BranchDAO branchDAO  = null;
     @Override
     public void init()        
             throws ServletException {        
     	dataSource = (DataSource) getServletContext().getAttribute("dataSource");
+    	branchDAO = new BranchDAO(dataSource);
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BranchDAO branchDAO = new BranchDAO(dataSource);        
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {               
         String method = request.getMethod();
         String path = request.getServletPath();        
         if(method.equals("GET")) {
@@ -53,13 +54,13 @@ public class BranchServlet extends HttpServlet {
             if(editId != null) 
             {
                 Office branch = branchDAO.getBranch(Integer.valueOf(editId));
-                request.setAttribute("branch", branch);
+                request.setAttribute("branch", branch);               
                 request.getRequestDispatcher(PagesHelper.BRANCH_FORM).forward(request, response);
             } else if (add) {
                 Office branch = new Office();
                 branch.setIsbranch(1);
                 branch.setParent(0);
-                request.setAttribute("branch", branch);
+                request.setAttribute("branch", branch);                
                 request.getRequestDispatcher(PagesHelper.BRANCH_FORM).forward(request, response);
             }
             else {
@@ -71,7 +72,7 @@ public class BranchServlet extends HttpServlet {
             String strId = request.getParameter("idoffice");
             Office updatedBranch = strId == null || strId.isEmpty() ? new Office(): branchDAO.getBranch(Integer.valueOf(strId));
             updatedBranch.setName(request.getParameter("name"));
-            String errors =MyValidator.validate(updatedBranch);
+            String errors = MyValidator.validate(updatedBranch);
             
             if(!errors.isEmpty())  
             {
