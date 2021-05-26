@@ -6,6 +6,7 @@ import oct.soft.dao.BranchDAO;
 import oct.soft.dao.OfficeDAO;
 import oct.soft.dao.PersonDAO;
 import oct.soft.db.util.MyDataSource;
+import oct.soft.model.Person;
 
 public class BranchOfficeTest {
 
@@ -23,7 +24,8 @@ public class BranchOfficeTest {
 	public static void main(String[] args) {
 		BranchOfficeTest bTest = new BranchOfficeTest();
 //		bTest.getOffices();
-		bTest.testPersonWithOfficeAndBranch();
+//		bTest.testPersonWithOfficeAndBranch();
+		bTest.testSavePersonAndReturnId();
 	
 	}
 	
@@ -33,6 +35,14 @@ public class BranchOfficeTest {
 	
 	public void testPersonWithOfficeAndBranch() {
 	System.out.println(personDAO.getAll());
+	}
+	
+	public void testSavePersonAndReturnId() {
+		Person person = new Person();
+		person.setFname("test");
+		person.setLname("test");
+		person.setNickname("testnick");
+		System.out.println(personDAO.saveOrUpdate(person));
 	}
 	
 }

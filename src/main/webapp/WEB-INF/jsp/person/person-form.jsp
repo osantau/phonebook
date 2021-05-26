@@ -7,7 +7,7 @@
 			class="oct.soft.model.Person" />
         <jsp:setProperty name="person" property="*" />
         
-        <form action="<c:url value=""/>" method="post">
+        <form action="<c:url value="person?action=add-or-update"/>" method="post">
         <c:if test="${not empty errors }">
 <div style="color: red;">${errors}</div>
 </c:if>    
@@ -32,7 +32,7 @@
 </td>
 </tr>
 <tr>
-<td></td><td align="right"><input type="submit" value="Adauga"/>&nbsp;
+<td></td><td align="right"><input type="submit" value="Adauga / Actualizeaza"/>&nbsp;
         <a href="<c:url value="/person"/>" style="text-decoration: none;">
             <input type="button" value="Cancel"/> 
                  </a> </td>
@@ -40,6 +40,8 @@
 </table>
 </fieldset>                         
 </form>
+<c:if test="${isEdit }">
 
+</c:if>
 </jsp:attribute>
 </t:layout>

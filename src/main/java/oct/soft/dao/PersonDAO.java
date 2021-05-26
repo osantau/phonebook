@@ -1,5 +1,6 @@
 package oct.soft.dao;
 
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import oct.soft.model.Office;
 import oct.soft.model.Person;
@@ -76,19 +78,23 @@ public class PersonDAO {
 		return person;
 	}
 
-	public void saveOrUpdate(Person person) {
+	public int saveOrUpdate(Person person) {
+		int idperson = 0;
 		try{            
             if(person.isNew()) {
-                sql = "INSERT INTO peson(fname, lname, nickname) VALUES (?,?,?);";
-                BeanHandler<Person> beanHandler = new BeanHandler<>(Person.class);
-            queryRunner.insert(sql, beanHandler,person.getFname(),person.getLname(), person.getNickname());
+                sql = "INSERT INTO person(fname, lname, nickname) VALUES (?,?,?);";
+//                BeanHandler<Person> beanHandler = new BeanHandler<>(Person.class);
+//                queryRunner.insert(sql, beanHandler,person.getFname(),person.getLname(), person.getNickname());
+                ScalarHandler<BigInteger> scalarHandler = new ScalarHandler<>();
+                idperson = (queryRunner.insert(sql, scalarHandler,person.getFname(),person.getLname(), person.getNickname())).intValue();             
             } else {
                 //update data
             queryRunner.update("UPDATE office set fname =?,lname=?,nickname=? WHERE idperson = ?;", person.getFname(), person.getLname(), person.getNickname());
+            idperson = person.getIdperson().intValue();
             }
         } catch(Exception e) {
             e.printStackTrace();
         }        
-		
+		return idperson;
 	}
 }

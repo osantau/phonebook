@@ -59,6 +59,8 @@ public class PersonServlet extends HttpServlet {
 						break;
 					case "edit":
 					{
+						Person person = personDAO.getById(Integer.valueOf(request.getParameter("idperson")));
+						request.setAttribute("person", person);
 						request.setAttribute("isEdit", true);
 						request.getRequestDispatcher(PagesHelper.PERSON_FORM);
 						request.getRequestDispatcher(PagesHelper.PERSON_FORM).forward(request, response);
@@ -79,12 +81,12 @@ public class PersonServlet extends HttpServlet {
 			if (path.equals("/person")) {
 				String action = request.getParameter("action");
 				switch (action) {
-				case "add": {
+				case "add-or-update": {
 					String strId = request.getParameter("idperson");
 					Person person = strId==null || strId.isEmpty() ? new Person() : personDAO.getById(Integer.valueOf(strId));
 					person.setFname(request.getParameter("fname"));
-					person.setFname(request.getParameter("lname"));
-					person.setFname(request.getParameter("nickname"));
+					person.setLname(request.getParameter("lname"));
+					person.setNickname(request.getParameter("nickname"));
 					String errors = MyValidator.validate(person);
 					
 					if(!errors.isEmpty())  
@@ -92,8 +94,8 @@ public class PersonServlet extends HttpServlet {
 		            	request.setAttribute("errors", errors);		            			            	
 		            	request.getRequestDispatcher(PagesHelper.PERSON_FORM).forward(request, response);
 		            } else {
-			            personDAO.saveOrUpdate(person);
-			            response.sendRedirect(request.getServletContext().getContextPath()+"/person");
+			            int personId = personDAO.saveOrUpdate(person);
+			            response.sendRedirect(request.getServletContext().getContextPath()+"/person?action=edit&idperson="+personId);
 		            } 
 				}
 					

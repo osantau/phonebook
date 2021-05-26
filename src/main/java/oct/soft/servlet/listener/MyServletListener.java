@@ -2,6 +2,8 @@ package oct.soft.servlet.listener;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -47,8 +49,7 @@ public class MyServletListener implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent sce)  {
-    
-    	System.out.println("Initializare DS");
+        	
 			try {
 				ServletContext application = sce.getServletContext();
 
@@ -66,8 +67,11 @@ public class MyServletListener implements ServletContextListener {
 				datasource.setMaxStatements(50);
 				datasource.setIdleConnectionTestPeriod(3000);
 				datasource.setPreferredTestQuery("select 1");
+				Statement stmt = datasource.getConnection().createStatement();
+				stmt.execute("SELECT count(*) from person");
+				stmt.close();
 				application.setAttribute("dataSource", datasource);
-			} catch (PropertyVetoException ex) {
+			} catch (PropertyVetoException | SQLException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			}

@@ -1,7 +1,10 @@
 package oct.soft.dao;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListResourceBundle;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -63,5 +66,15 @@ public class OfficeDAO {
 	            e.printStackTrace();
 	        }
 	        return office;
+	    }
+	    
+	    public String getBranchOfficeSelectList()
+	    {
+	    	Map<String, List<Office>> data = new LinkedHashMap<>();
+	    	
+	    	
+	    	StringBuilder sb = new StringBuilder("<select name =\"office\">");
+	    	sb.append("</select>");
+	    	return sb.toString();
 	    }
 }
