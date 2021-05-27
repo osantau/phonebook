@@ -1,6 +1,11 @@
 package oct.soft.test;
 
+import java.security.MessageDigest;
+
 import javax.sql.DataSource;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.digest.Md5Crypt;
 
 import oct.soft.dao.BranchDAO;
 import oct.soft.dao.OfficeDAO;
@@ -27,7 +32,9 @@ public class BranchOfficeTest {
 //		bTest.testPersonWithOfficeAndBranch();
 //		bTest.testSavePersonAndReturnId();
 //		bTest.testGetOfficeCombo();
-		bTest.officeByPersonId();
+//		bTest.officeByPersonId();
+		System.out.println(Md5Crypt.md5Crypt("1qed".getBytes()));
+		
 	
 	}
 	

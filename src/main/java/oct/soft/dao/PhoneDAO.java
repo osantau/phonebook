@@ -69,5 +69,44 @@ public class PhoneDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void addPersonPhone(int idperson, int number, String type) {
+		Phone phone = new Phone();
+		phone.setIdperson(idperson);
+		phone.setNumber(number);
+		switch (type) {
+		case "interior":
+			phone.setInterior(1);
+			break;
+		case "mobil":
+			phone.setMobil(1);
+			break;
+		case "fix":
+			phone.setFix(1);
+		}
+
+		sql = "INSERT INTO phone(idperson,number,interior,mobil,fix) VALUES (?,?,?,?,?)";
+		  BeanHandler<Phone> beanHandler = new BeanHandler<>(Phone.class);
+          try {        	  
+			queryRunner.insert(sql, beanHandler,phone.getIdperson(), phone.getNumber(), phone.getInterior(), phone.getMobil(), phone.getFix());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public List<Phone> getPersonPhones(int idPerson)
+	{
+		 List<Phone> officePhones = new ArrayList<>();
+		 
+	        try{
+	        BeanListHandler<Phone> beanListHandler = new BeanListHandler<>(Phone.class);
+	        sql = "SELECT * FROM phone WHERE idperson = ?";
+	        officePhones = queryRunner.query(sql, beanListHandler, idPerson);	        	       
+	        }catch(Exception ex) {
+	            ex.printStackTrace();
+	        }
+		 return officePhones;
+	}
 		
 }

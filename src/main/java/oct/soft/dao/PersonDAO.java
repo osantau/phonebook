@@ -119,5 +119,16 @@ public class PersonDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public void removePhoneFromPerson(int idperson, int number) {
+		sql = "DELETE FROM phone WHERE idperson = ? AND number=?";
+		try {
+			queryRunner.execute(sql, idperson,number);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

@@ -81,6 +81,7 @@ public class BranchServlet extends HttpServlet {
             } else {
 	            branchDAO.saveOrUpdate(updatedBranch);
 	            response.sendRedirect(request.getServletContext().getContextPath()+"/branches");
+	            return;
             }
         }
     }

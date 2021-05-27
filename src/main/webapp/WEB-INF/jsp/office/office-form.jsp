@@ -72,7 +72,7 @@
     <table>
        <tr>
     <td>Telefon:</td>
-    <td><input type="text" name="phone" required="required"/></td>
+    <td><input type="text" name="number" required="required"/></td>
 </tr>
 <tr>
     <td>&nbsp;</td>

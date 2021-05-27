@@ -58,6 +58,7 @@ public class OfficeServlet extends HttpServlet {
 	    		 int number = Integer.valueOf(request.getParameter("number"));
 	    		 phoneDAO.deleteOfficePhone(office, number);
 	    		 response.sendRedirect(request.getContextPath()+"/office?edit="+office);
+	    		 return;
 	    	 }
 	     else {
 	            String editId = request.getParameter("edit");
@@ -91,6 +92,7 @@ public class OfficeServlet extends HttpServlet {
 	        		String strId = request.getParameter("idoffice");	     
 	        		phoneDAO.addOfficePhone(Integer.valueOf(strId), Integer.valueOf(request.getParameter("phone")), request.getParameter("tel"));
 	        		response.sendRedirect(request.getContextPath()+"/office?edit="+strId);
+	        		return;
 	        }
 	        else {
 	            String strId = request.getParameter("idoffice");
@@ -108,6 +110,7 @@ public class OfficeServlet extends HttpServlet {
 	            } else {
 		            officeDAO.saveOrUpdate(updatedOffice);
 		            response.sendRedirect(request.getServletContext().getContextPath()+"/office");
+		            return;
 	            } 
 	        }
 	        }
