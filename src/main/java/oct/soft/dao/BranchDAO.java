@@ -69,5 +69,18 @@ public class BranchDAO {
         }
         return branch;
     }
+    
+    public List<Office> getOfficesByBranch(int branchId)
+    {
+    	List<Office> offices = new LinkedList<>();
+        try{
+        BeanListHandler<Office> beanListHandler = new BeanListHandler<>(Office.class);
+      
+        offices = queryRunner.query("SELECT * FROM office where isbranch=? and parent=? ORDER BY name", beanListHandler,0,branchId);
+        }catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return offices;
+    }
        
 }

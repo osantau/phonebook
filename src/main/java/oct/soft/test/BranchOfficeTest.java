@@ -25,7 +25,9 @@ public class BranchOfficeTest {
 		BranchOfficeTest bTest = new BranchOfficeTest();
 //		bTest.getOffices();
 //		bTest.testPersonWithOfficeAndBranch();
-		bTest.testSavePersonAndReturnId();
+//		bTest.testSavePersonAndReturnId();
+//		bTest.testGetOfficeCombo();
+		bTest.officeByPersonId();
 	
 	}
 	
@@ -43,6 +45,15 @@ public class BranchOfficeTest {
 		person.setLname("test");
 		person.setNickname("testnick");
 		System.out.println(personDAO.saveOrUpdate(person));
+	}
+	
+	public void testGetOfficeCombo() {
+		System.out.println(officeDAO.getBranchOfficeChilds(214));
+	}
+	
+	public void officeByPersonId()
+	{
+		System.out.println(officeDAO.getOfficesByPerson(214));
 	}
 	
 }

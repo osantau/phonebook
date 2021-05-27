@@ -1,5 +1,8 @@
 package oct.soft.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +16,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import oct.soft.model.Office;
+import oct.soft.model.Person;
 
 public class OfficeDAO {
 	  private QueryRunner queryRunner;
@@ -68,13 +72,49 @@ public class OfficeDAO {
 	        return office;
 	    }
 	    
-	    public String getBranchOfficeSelectList()
+	    public Map<Office, List<Office>> getBranchOfficeChilds(int idperson)
+	    {	    		    	
+	    	Map<Office, List<Office>> data = new LinkedHashMap<Office, List<Office>>();	    	
+	    	BranchDAO branchDAO = new BranchDAO(queryRunner.getDataSource());
+	    	List<Office> branches =branchDAO.branchList();
+	    	StringBuilder sb = new StringBuilder("<select name =\"office\">\n");
+	    	/*branches.forEach(branch ->{
+	    		sb.append("<option value=\"10\" disabled=\"disabled\" style=\"font-weight: bold;\">").append(branch.getName().toUpperCase()).append("</option>\n");
+	    		List<Office> offices = branchDAO.getOfficesByBranch(branch.getIdoffice());
+	    		offices.forEach(office ->{
+	    			sb.append("<option value=\"").append(office.getIdoffice())
+	    			.append("\" style=\"margin-left: 15px;\">").append(office.getName()).append("</option>\n");
+	    		});
+	    	});
+	    	
+	    	sb.append("</select>"); 
+	    	return sb.toString();*/
+	    	
+	    	List<Office> personOffices = getOfficesByPerson(idperson);
+	    	branches.forEach(branch ->{	    	    		
+	    		List<Office> tempList = branchDAO.getOfficesByBranch(branch.getIdoffice());
+	    		tempList.removeAll(personOffices);
+	    		data.put(branch,tempList);
+	    	});
+	    	return data;
+	    }
+	    
+	    public List<Office> getOfficesByPerson(int idperson) 
 	    {
-	    	Map<String, List<Office>> data = new LinkedHashMap<>();
+	    	sql = "select * from office where idoffice in (select idoffice from offices_person where idperson=?) ORDER BY name";	    	
+	    	List<Office> data = new LinkedList<>();
+	    	BeanListHandler<Office> beanListHandler = new BeanListHandler<>(Office.class);
+	    	try {
+	    		data =  queryRunner.query(sql, beanListHandler,idperson); 
+	    		BranchDAO branchDAO = new BranchDAO(queryRunner.getDataSource());
+	    		data.forEach(o ->{
+	    			o.setBranch(branchDAO.getBranch(o.getParent()));
+	    		});
+	    		
+	    	}catch (Exception e) {
+	    		e.printStackTrace();
+			}
 	    	
-	    	
-	    	StringBuilder sb = new StringBuilder("<select name =\"office\">");
-	    	sb.append("</select>");
-	    	return sb.toString();
+	    	return data;
 	    }
 }

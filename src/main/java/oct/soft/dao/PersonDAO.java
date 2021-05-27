@@ -89,12 +89,35 @@ public class PersonDAO {
                 idperson = (queryRunner.insert(sql, scalarHandler,person.getFname(),person.getLname(), person.getNickname())).intValue();             
             } else {
                 //update data
-            queryRunner.update("UPDATE office set fname =?,lname=?,nickname=? WHERE idperson = ?;", person.getFname(), person.getLname(), person.getNickname());
-            idperson = person.getIdperson().intValue();
+                idperson = person.getIdperson().intValue();
+            	queryRunner.update("UPDATE person set fname =?,lname=?,nickname=? WHERE idperson = ?;", person.getFname(), person.getLname(), person.getNickname(),
+            			idperson);
+        
             }
         } catch(Exception e) {
             e.printStackTrace();
         }        
 		return idperson;
 	}
+	
+	public void addOfficeToPerson(int idperson, int idoffice) {
+		
+		sql = "INSERT INTO offices_person(idperson, idoffice) VALUES(?,?)";
+		try {
+			queryRunner.update(sql, idperson, idoffice);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removePersonFromOffice(int idperson, int idoffice) 
+	{
+		sql = "DELETE FROM offices_person where idperson=? and idoffice=?";
+		try {
+			queryRunner.update(sql, idperson, idoffice);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

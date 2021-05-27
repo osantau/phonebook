@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.mysql.cj.result.IntegerValueFactory;
+
+import oct.soft.dao.OfficeDAO;
 import oct.soft.dao.PersonDAO;
 import oct.soft.helpers.PagesHelper;
 import oct.soft.model.Person;
@@ -22,6 +25,7 @@ public class PersonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DataSource dataSource = null;
 	PersonDAO personDAO = null;
+	OfficeDAO officeDAO = null;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -34,7 +38,7 @@ public class PersonServlet extends HttpServlet {
 	public void init() throws ServletException {
 		dataSource = (DataSource) getServletContext().getAttribute("dataSource");
 		personDAO = new PersonDAO(dataSource);
-
+		officeDAO = new OfficeDAO(dataSource);
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -48,40 +52,45 @@ public class PersonServlet extends HttpServlet {
 				request.setAttribute("personList", personDAO.getAll());
 				request.getRequestDispatcher(PagesHelper.PERSON_LIST).forward(request, response);
 				} else {
-					switch (action) {
-					case "add":
-					{
+					
+					if(action.equals( "add")) {
 						Person person = new Person();
 						request.setAttribute("person", person);
 						request.setAttribute("isEdit", false);
 						request.getRequestDispatcher(PagesHelper.PERSON_FORM).forward(request, response);
 					}
-						break;
-					case "edit":
+					
+					else if(action.equals( "edit"))
 					{
 						Person person = personDAO.getById(Integer.valueOf(request.getParameter("idperson")));
 						request.setAttribute("person", person);
 						request.setAttribute("isEdit", true);
+						request.setAttribute("officeCombo", officeDAO.getBranchOfficeChilds(person.getIdperson()));
+						request.setAttribute("offices", officeDAO.getOfficesByPerson(person.getIdperson()));
 						request.getRequestDispatcher(PagesHelper.PERSON_FORM);
 						request.getRequestDispatcher(PagesHelper.PERSON_FORM).forward(request, response);
 					}
-						break;
-					case "delete":
+					else if (action.equals("delete"))
 					{
 						int idperson = Integer.valueOf(request.getParameter("idperson"));
 						personDAO.delete(idperson);
 						response.sendRedirect(request.getContextPath()+"/person");
+						return;
 					}
-						break;
-					
-					}					
+						
+					else if(action.equals( "remove-office")) {
+						int idperson = Integer.valueOf(request.getParameter("idperson"));
+						int idoffice = Integer.valueOf(request.getParameter("idoffice"));
+						personDAO.removePersonFromOffice(idperson, idoffice);
+						response.sendRedirect(request.getContextPath()+"/person?action=edit&idperson="+idperson);	return;											
+					} 
+										
 				}
 			}
 		} else if (method.equals("POST")) {
 			if (path.equals("/person")) {
 				String action = request.getParameter("action");
-				switch (action) {
-				case "add-or-update": {
+				if(action.equals( "add-or-update")) {
 					String strId = request.getParameter("idperson");
 					Person person = strId==null || strId.isEmpty() ? new Person() : personDAO.getById(Integer.valueOf(strId));
 					person.setFname(request.getParameter("fname"));
@@ -96,12 +105,15 @@ public class PersonServlet extends HttpServlet {
 		            } else {
 			            int personId = personDAO.saveOrUpdate(person);
 			            response.sendRedirect(request.getServletContext().getContextPath()+"/person?action=edit&idperson="+personId);
+			            return;
 		            } 
-				}
-					
-				break;
-
-				}
+				}				
+				else if(action.equals("add-office")) {					
+					Person person = personDAO.getById(Integer.valueOf(request.getParameter("idperson")));			
+					personDAO.addOfficeToPerson(person.getIdperson(), Integer.valueOf(request.getParameter("idoffice")));
+					response.sendRedirect(request.getContextPath()+"/person?action=edit&idperson="+person.getIdperson());
+					return;
+				} 				
 			}
 
 		}
