@@ -177,5 +177,72 @@ public class ReportDAO {
 		}
 		return outByteStream;
 	}
+	
+	public List<BirouBean> searchBranch(String keyword)
+	{
+		sql = "SELECT o.idoffice "
+				+ ",o.name, p.number FROM "
+				+ "office o "
+				+ "INNER JOIN phone p on(o.idoffice=p.idoffice) "
+				+ " WHERE o.isbranch=1 AND o.name like'%"+ keyword.toLowerCase() + "%' ORDER BY o.name ASC";
+		List<BirouBean> data = new LinkedList<>();
+		BeanListHandler<BirouBean> beanListHandler = new BeanListHandler<>(BirouBean.class);
+		try {
+			data =queryRunner.query(sql, beanListHandler);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;		
+	}
+	
+	public List<BirouBean> searchOffice(String keyword)
+	{
+		sql="SELECT o.idoffice\n"
+				+ "                        ,o.name \n"
+				+ "                        ,p.number\n"
+				+ "                        ,o1.name as branch\n"
+				+ "                  FROM office o \n"
+				+ "                  INNER JOIN phone p on(o.idoffice=p.idoffice) \n"
+				+ "                  INNER JOIN office o1 on(o.parent=o1.idoffice) \n"
+				+ "                  WHERE o.name like '%"+keyword.toLowerCase()+"%'\n"
+				+ "                  ORDER BY o.name ASC";
+		List<BirouBean> data = new LinkedList<>();
+		BeanListHandler<BirouBean> beanListHandler = new BeanListHandler<>(BirouBean.class);
+		try {
+			data =queryRunner.query(sql, beanListHandler);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;	
+	}
+	
+	public List<PersonBean> searchPerson(String keyword)
+	{
+		keyword = keyword.toLowerCase();
+		sql ="SELECT fname,lname,name,branch,number,idperson,telserv,telfix,telmobil,idoffice\n"
+				+ "                    FROM search WHERE fname LIKE '%" +keyword+"%' OR lname LIKE '%\" . $keyword . \"%' \n"
+				+ "                    OR CONCAT(fname,' ',lname) LIKE '%" +keyword +"%' \n"
+				+ "                    OR CONCAT(lname,' ',fname) LIKE '%"+keyword +"%' \n"
+				+ "                    OR nickname LIKE '%"+keyword +"%' \n"
+				+ "                    OR CONCAT(fname,' ',nickname) LIKE '%"+keyword+"%' \n"
+				+ "                    OR CONCAT(lname,' ',nickname) LIKE '%"+keyword+"%'\n"
+				+ "                    OR CONCAT(nickname,' ',fname) LIKE '%"+keyword+"%' \n"
+				+ "                    OR CONCAT(nickname,' ',lname) LIKE '%"+keyword+"%' \n"
+				+ "                    OR number LIKE '%\".$keyword.\"%' \n"
+				+ "                    OR telserv LIKE '%\".$keyword.\"%' ORDER BY fname";
+		List<PersonBean> data = new LinkedList<>();
+
+		BeanListHandler<PersonBean> beanListHandler = new BeanListHandler<>(PersonBean.class);
+		try {
+			data = queryRunner.query(sql, beanListHandler);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
 }
 

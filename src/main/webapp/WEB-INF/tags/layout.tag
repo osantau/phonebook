@@ -17,7 +17,6 @@
 <script type="text/javascript"	src="${pageContext.servletContext.contextPath}/assets/js/jquery.watermark.js"></script>
 <script type="text/javascript"	src="${pageContext.servletContext.contextPath}/assets/jquery/jquery.livesearchnew.js"></script>
 <script type="text/javascript"	src="${pageContext.servletContext.contextPath}/assets/jquery/jquery.multiselect.js"></script>
-<script type="text/javascript"	src="${pageContext.servletContext.contextPath}/assets/js/search.js"></script>
 </head>
 <body>
 	<div id="content">
@@ -88,13 +87,55 @@
 			</p>
 			<p>
 				&copy;Copyright
-				<?php echo date('Y');?>
+				2021
 				- <a href="mailto:it@plastor.ro"
 					title="Servicul Tehnologia Informatiei">Servicul Tehnologia
 					Informatiei</a>
 			</p>
 		</div>
 	</div>
+	<script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#faq_search_input").focus();
+                            $("#faq_search_input").livesearch({
+                                searchCallback: function (term) {
+                                    //browser compatibility                                 
+                                    if ($.browser.msie || $.browser.webkit) {
+                                        $("#faq_search_input").keydown(function (e) {
+                                            if (e.keyCode == 8)
+                                                $('.gbox').html("").show();
+                                            else if (e.keyCode == 13)
+                                                e.preventDefault();
+                                        });
+                                    } else {
+                                        $("#faq_search_input").keypress(function (e) {
+                                            if (e.keyCode == 8)
+                                                $('.gbox').html("").show();
+                                            else if (e.keyCode == 13)
+                                                e.preventDefault();
+                                        });
+                                    }
+                            //end browser compatibility
+                                    if (term.length >= 2) {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "${pageContext.servletContext.contextPath}/search",
+                                            data: "keyword=" + term,
+                                            success: function (response)
+                                            {
+                                                $('.gbox').html(response).show();
+                                            }
+                                        });
+                                    } else if (term.length == 1)
+                                        $('.gbox').html("").show();
+                                },
+
+                                innerText: "",
+                                queryDelay: 250,
+                                minimumSearchLength: 2
+                            });
+                        });
+                    </script>
 </body>
 
 </html>

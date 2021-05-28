@@ -46,7 +46,10 @@ public class BranchOfficeTest {
 //		bTest.officeByPersonId();
 //		bTest.usersGetAll();			
 //		bTest.testAuthentication();
-		bTest.reportBirouri();
+//		bTest.reportBirouri();
+//		bTest.searchBranch();
+//		bTest.searchOffice();
+		bTest.searchPerson();
 		
 	}
 
@@ -82,6 +85,17 @@ public class BranchOfficeTest {
 		System.out.println(userDAO.getAuthenticatedUser("admin", "admin").isAuthenticated());
 	}
 
+	public void searchBranch() {
+		System.out.println(reportDAO.searchBranch("last"));
+	}
+		
+	public void searchOffice() {
+		System.out.println(reportDAO.searchOffice("infor"));
+	}
+	
+	public void searchPerson() {
+		System.out.println(reportDAO.searchPerson("anta"));
+	}
 		public void reportBirouri()
 		{
 			XSSFWorkbook wk = new XSSFWorkbook();

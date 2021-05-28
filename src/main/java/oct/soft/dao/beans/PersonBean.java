@@ -13,6 +13,18 @@ public class PersonBean {
 	private String prenume;
 	private String numere;
 	private String numar_asociat;
+	
+	//for search
+	private String fname;
+	private String lname;
+	private String name;
+	private String branch;
+	private String number;
+	private String idperson;
+	private String telserv;
+	private String telfix;
+	private String telmobil;
+	
 	public String getNume() {
 		return nume;
 	}
@@ -37,11 +49,70 @@ public class PersonBean {
 	public void setNumar_asociat(String numar_asociat) {
 		this.numar_asociat = numar_asociat;
 	}
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+	public String getLname() {
+		return lname;
+	}
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	public String getIdperson() {
+		return idperson;
+	}
+	public void setIdperson(String idperson) {
+		this.idperson = idperson;
+	}
+	public String getTelserv() {
+		return telserv;
+	}
+	public void setTelserv(String telserv) {
+		this.telserv = telserv;
+	}
+	public String getTelfix() {
+		return telfix;
+	}
+	public void setTelfix(String telfix) {
+		this.telfix = telfix;
+	}
+	public String getTelmobil() {
+		return telmobil;
+	}
+	public void setTelmobil(String telmobil) {
+		this.telmobil = telmobil;
+	}
 	@Override
 	public String toString() {
 		return "PersonBean [nume=" + nume + ", prenume=" + prenume + ", numere=" + numere + ", numar_asociat="
-				+ numar_asociat + "]\n";
+				+ numar_asociat + ", fname=" + fname + ", lname=" + lname + ", name=" + name + ", branch=" + branch
+				+ ", number=" + number + ", idperson=" + idperson + ", telserv=" + telserv + ", telfix=" + telfix
+				+ ", telmobil=" + telmobil + "]";
 	}
+	
+	
+	
 	
 	
 }

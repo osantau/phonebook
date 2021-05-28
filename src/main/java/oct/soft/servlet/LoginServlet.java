@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		String method = request.getMethod();
 		String path = request.getServletPath();
 		if (method.equals("GET")) {
