@@ -26,5 +26,6 @@ public final class PagesHelper {
     public static final String USER_LIST="/WEB-INF/jsp/user/user-list.jsp";
     public static final String USER_FORM="/WEB-INF/jsp/user/user-form.jsp";
   
-   //
+   //EXPORT
+    public static final String EXPORT_LIST="/WEB-INF/jsp/export/export.jsp";
 }
