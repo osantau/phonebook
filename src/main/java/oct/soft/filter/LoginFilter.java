@@ -1,4 +1,4 @@
-package oct.soft.servlet.filter;
+package oct.soft.filter;
 
 import java.io.IOException;
 import javax.servlet.Filter;
