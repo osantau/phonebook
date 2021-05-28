@@ -34,7 +34,7 @@ public class BranchOfficeTest {
 //		bTest.testGetOfficeCombo();
 //		bTest.officeByPersonId();
 //		bTest.usersGetAll();			
-				
+				bTest.testAuthentication();
 	}
 
 	public void getOffices() {
@@ -63,6 +63,10 @@ public class BranchOfficeTest {
 	
 	public void usersGetAll() {
 		System.out.println(userDAO.all());
+	}
+	
+	public void testAuthentication() {
+		System.out.println(userDAO.getAuthenticatedUser("admin", "admin").isAuthenticated());
 	}
 
 }

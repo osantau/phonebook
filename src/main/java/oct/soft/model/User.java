@@ -33,9 +33,11 @@ public class User {
 	private String password;
 
 	private String decodedPassword;
+	private boolean isAuthenticated;
 	
 	public User() {
 		this.password="";
+		this.isAuthenticated =false;
 	}
 
 	public Integer getId() {
@@ -110,10 +112,18 @@ public class User {
 		return this.id == null ? true : false;
 	}
 
+	public boolean isAuthenticated() {
+		return isAuthenticated;
+	}
+
+	public void setAuthenticated(boolean isAuthenticated) {
+		this.isAuthenticated = isAuthenticated;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", fname=" + fname + ", lname="
-				+ lname + ", isadmin=" + isadmin + ", password=" + password + ", decodedPassword=" + getDecodedPassword()+"]";
+				+ lname + ", isadmin=" + isadmin + ", password=" + password + ", decodedPassword=" + getDecodedPassword()+", isAuthenticated="+isAuthenticated+"]";
 	}
 	
 	

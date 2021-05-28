@@ -1,3 +1,4 @@
+<%@tag import="oct.soft.model.User"%>
 <%@tag description="Template" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@attribute name="title"%>
 <%@attribute name="body_area" fragment="true" required="true"%>
@@ -27,9 +28,10 @@
 				</a>
 
 			</h1>
-			<% if(session.getAttribute("username") != null) {%>
+			<% User user = (User) session.getAttribute("user"); %>
+			<% if(user != null) {%>
 			<div align="right" style="font-size: 14px;">
-				Utilizator curent: <b> <%= session.getAttribute("username") %>
+				Utilizator curent: <b> <%= user.getUsername() %>
 				</b>
 			</div>
 			<% }%>
@@ -37,12 +39,12 @@
 
 		<div id="tabs">
 			<ul>		
-			 <% if(session.getAttribute("username") !=null) { %>	  
+			 <% if(user !=null) { %>	  
 				<li><a
 					href="${pageContext.servletContext.contextPath}/logout"
 					accesskey="l"><span class="key">L</span>ogout</a></li>
-					<% if(session.getAttribute("role").equals("admin")) { %>				
-				<li><a href="${pageContext.servletContext.contextPath}/admin"
+					<% if(user.getIsadmin()==1) { %>				
+				<li><a href="${pageContext.servletContext.contextPath}/user"
 					accesskey="c"><span class="key">U</span>sers</a> <% } %>
 				<li><a href="${pageContext.servletContext.contextPath}/person"
 					accesskey="p"><span class="key">P</span>ersonal</a></li>
@@ -73,7 +75,7 @@
 
 		<div class="gboxtop"></div>
 		<div class="gbox">
-		<% if(session.getAttribute("username") != null && session.getAttribute("role").equals("admin")) { %>
+		<% if(user != null && user.getIsadmin()==1) { %>
 			<a href="${pageContext.servletContext.contextPath}/add-user">Add User</a>
 		<% } %>			
 			<jsp:invoke fragment="body_area" />

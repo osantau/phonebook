@@ -29,8 +29,7 @@ public class MyServletListener implements ServletContextListener {
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
-    public void contextDestroyed(ServletContextEvent sce)  {
-    	System.out.println("Deinitializare DS");
+    public void contextDestroyed(ServletContextEvent sce)  {    	
     	ServletContext application = sce.getServletContext();
     	ComboPooledDataSource dataSource = (ComboPooledDataSource) application.getAttribute("dataSource");
     	
