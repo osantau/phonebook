@@ -21,4 +21,10 @@ public final class PagesHelper {
   //PERSON
     public static final String PERSON_LIST="/WEB-INF/jsp/person/person-list.jsp";
     public static final String PERSON_FORM="/WEB-INF/jsp/person/person-form.jsp";
+  
+    //USER
+    public static final String USER_LIST="/WEB-INF/jsp/user/user-list.jsp";
+    public static final String USER_FORM="/WEB-INF/jsp/user/user-form.jsp";
+  
+   //
 }
