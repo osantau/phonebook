@@ -1,13 +1,10 @@
 package oct.soft.dao;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.sql.DataSource;
 
@@ -224,7 +221,7 @@ public class ReportDAO {
 	{
 		keyword = keyword.toLowerCase();
 		sql ="SELECT fname,lname,name,branch,group_concat(number) as number,idperson,telserv,telfix,telmobil,idoffice\n"
-				+ "                    FROM search WHERE fname LIKE '%" +keyword+"%' OR lname LIKE '%\" . $keyword . \"%' \n"
+				+ "                    FROM search WHERE fname LIKE '%" +keyword+"%' OR lname LIKE '%" +keyword+"%' \n"
 				+ "                    OR CONCAT(fname,' ',lname) LIKE '%" +keyword +"%' \n"
 				+ "                    OR CONCAT(lname,' ',fname) LIKE '%"+keyword +"%' \n"
 				+ "                    OR nickname LIKE '%"+keyword +"%' \n"
@@ -232,8 +229,8 @@ public class ReportDAO {
 				+ "                    OR CONCAT(lname,' ',nickname) LIKE '%"+keyword+"%'\n"
 				+ "                    OR CONCAT(nickname,' ',fname) LIKE '%"+keyword+"%' \n"
 				+ "                    OR CONCAT(nickname,' ',lname) LIKE '%"+keyword+"%' \n"
-				+ "                    OR number LIKE '%\".$keyword.\"%' \n"
-				+ "                    OR telserv LIKE '%\".$keyword.\"%' GROUP BY fname,lname,name,idperson,telserv,telfix,telmobil,idoffice ORDER BY fname";
+				+ "                    OR number LIKE '%"+keyword+"%' \n"
+				+ "                    OR telserv LIKE '%"+keyword+"%' GROUP BY fname,lname,name,idperson,telserv,telfix,telmobil,idoffice ORDER BY fname";
 		List<PersonBean> data = new LinkedList<>();
 
 		BeanListHandler<PersonBean> beanListHandler = new BeanListHandler<>(PersonBean.class);
