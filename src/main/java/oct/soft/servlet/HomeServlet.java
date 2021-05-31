@@ -166,8 +166,21 @@ public class HomeServlet extends HttpServlet {
 						sb.append("</tbody></table>");
 						response.getWriter().write(sb.toString());
 					} else if (!persoane.isEmpty()) {
-						sb = new StringBuilder();
-						response.getWriter().write("<h2>Persoane</h2>");
+						sb = new StringBuilder("<div align=\"center\"><table cellspacing=\"5\" style=\"text-align: center;\"><tbody>");
+						
+						for(PersonBean p : persoane)
+						{
+							sb.append("<tr><td style=\"font-weight: bold; vertical-align: top; text-align: left;\">"+p.getFname()+" "+p.getLname()+"</td>");
+							sb.append("<td>  <ul style=\"text-align: left; list-style-type: bullet;\">");
+								for(String b : p.getNumber().split(",")) {
+									
+								}
+							sb.append("</ul></td>");
+						}
+						
+						sb.append("</tbody></table>");						
+						
+						response.getWriter().write(sb.toString());
 					}
 		    	}
 	     }

@@ -108,7 +108,30 @@ public class PersonBean {
 		return "PersonBean [nume=" + nume + ", prenume=" + prenume + ", numere=" + numere + ", numar_asociat="
 				+ numar_asociat + ", fname=" + fname + ", lname=" + lname + ", name=" + name + ", branch=" + branch
 				+ ", number=" + number + ", idperson=" + idperson + ", telserv=" + telserv + ", telfix=" + telfix
-				+ ", telmobil=" + telmobil + "]";
+				+ ", telmobil=" + telmobil + "]\n";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idperson == null) ? 0 : idperson.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PersonBean other = (PersonBean) obj;
+		if (idperson == null) {
+			if (other.idperson != null)
+				return false;
+		} else if (!idperson.equals(other.idperson))
+			return false;
+		return true;
 	}
 	
 	

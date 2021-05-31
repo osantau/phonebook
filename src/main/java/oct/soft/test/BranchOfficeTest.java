@@ -1,7 +1,10 @@
 package oct.soft.test;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.sql.DataSource;
 
@@ -15,9 +18,9 @@ import oct.soft.dao.PersonDAO;
 import oct.soft.dao.ReportDAO;
 import oct.soft.dao.UserDAO;
 import oct.soft.dao.beans.BirouBean;
+import oct.soft.dao.beans.PersonBean;
 import oct.soft.db.util.MyDataSource;
 import oct.soft.model.Person;
-import oct.soft.model.User;
 
 public class BranchOfficeTest {
 
@@ -50,9 +53,16 @@ public class BranchOfficeTest {
 //		bTest.searchBranch();
 //		bTest.searchOffice();
 		bTest.searchPerson();
-		
+	
 	}
 
+	public void searchPerson() {
+		List<PersonBean> lst = reportDAO.searchPerson("sant");
+	
+	
+		System.out.println(lst);
+		
+	}
 	public void getOffices() {
 		System.out.println(officeDAO.officeList().get(0).getBranch());
 	}
@@ -93,9 +103,7 @@ public class BranchOfficeTest {
 		System.out.println(reportDAO.searchOffice("infor"));
 	}
 	
-	public void searchPerson() {
-		System.out.println(reportDAO.searchPerson("anta"));
-	}
+
 		public void reportBirouri()
 		{
 			XSSFWorkbook wk = new XSSFWorkbook();

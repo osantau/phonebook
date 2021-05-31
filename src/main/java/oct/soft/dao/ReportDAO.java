@@ -4,8 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.sql.DataSource;
 
@@ -221,7 +223,7 @@ public class ReportDAO {
 	public List<PersonBean> searchPerson(String keyword)
 	{
 		keyword = keyword.toLowerCase();
-		sql ="SELECT fname,lname,name,branch,number,idperson,telserv,telfix,telmobil,idoffice\n"
+		sql ="SELECT fname,lname,name,branch,group_concat(number) as number,idperson,telserv,telfix,telmobil,idoffice\n"
 				+ "                    FROM search WHERE fname LIKE '%" +keyword+"%' OR lname LIKE '%\" . $keyword . \"%' \n"
 				+ "                    OR CONCAT(fname,' ',lname) LIKE '%" +keyword +"%' \n"
 				+ "                    OR CONCAT(lname,' ',fname) LIKE '%"+keyword +"%' \n"
@@ -231,13 +233,27 @@ public class ReportDAO {
 				+ "                    OR CONCAT(nickname,' ',fname) LIKE '%"+keyword+"%' \n"
 				+ "                    OR CONCAT(nickname,' ',lname) LIKE '%"+keyword+"%' \n"
 				+ "                    OR number LIKE '%\".$keyword.\"%' \n"
-				+ "                    OR telserv LIKE '%\".$keyword.\"%' ORDER BY fname";
+				+ "                    OR telserv LIKE '%\".$keyword.\"%' GROUP BY fname,lname,name,idperson,telserv,telfix,telmobil,idoffice ORDER BY fname";
 		List<PersonBean> data = new LinkedList<>();
 
 		BeanListHandler<PersonBean> beanListHandler = new BeanListHandler<>(PersonBean.class);
 		try {
-			data = queryRunner.query(sql, beanListHandler);
-
+			data = queryRunner.query(sql, beanListHandler);		
+			if(!data.isEmpty())
+			{
+				for (int idx =0;idx<data.size();idx++)
+				{
+					if (idx!=0) {
+						PersonBean prev = data.get(idx-1);
+						PersonBean next = data.get(idx);
+						if(prev.equals(next)) {
+						next.setFname("");
+						next.setLname("");
+						data.set(idx, next);
+						}
+					}
+				}
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
