@@ -2,6 +2,8 @@ package oct.soft.dao;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -257,5 +259,21 @@ public class ReportDAO {
 		}
 		return data;
 	}
+        
+        public boolean hasPersonNumber(int idperson, String number){
+            String checkSql = "SELECT fname, lname FROM `person` "
+                    + " WHERE idperson=? and telint_id = (select telint_id from phone where number=?)";
+            
+            try(PreparedStatement pstmt = queryRunner.getDataSource().getConnection().prepareStatement(checkSql)) 
+            {
+                pstmt.setInt(1, idperson);
+                pstmt.setString(2, number);
+                ResultSet rs = pstmt.executeQuery();
+                return rs.next();
+            }catch(SQLException ex) {
+                ex.printStackTrace();
+            }
+            return false;
+        }
 }
 

@@ -172,9 +172,14 @@ public class HomeServlet extends HttpServlet {
 						{
 							sb.append("<tr><td style=\"font-weight: bold; vertical-align: top; text-align: left;\">"+p.getFname()+" "+p.getLname()+"</td>");
 							sb.append("<td>  <ul style=\"text-align: left; list-style-type: bullet;\">");
-								for(String b : p.getNumber().split(",")) {
-									
-								}
+							sb.append("<li>").append(p.getBranch()).append(" - ").append(p.getName()).append(": <b>");
+                                                        for(String number : p.getNumber().split(","))
+                                                        {
+                                                            if(number.length() == 3){
+                                                             
+                                                            }
+                                                        }
+                                                        sb.append("</li>");
 							sb.append("</ul></td>");
 						}
 						
