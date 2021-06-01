@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -260,27 +262,22 @@ public class ReportDAO {
 		return data;
 	}
         
-        public boolean hasPersonNumber(int idperson, String number){
-            String checkSql = "SELECT p.fname FROM person p "
-            		+ " join phone t on t.idphone = p.telint_id "
-                    + " WHERE p.idperson=? and t.number=? limit 1";
-            
-            try(PreparedStatement pstmt = queryRunner.getDataSource().getConnection().prepareStatement(checkSql)) 
-            {
-                pstmt.setInt(1, idperson);
-                pstmt.setString(2, number);
-                ResultSet rs = pstmt.executeQuery();
-               if(rs.next())
-               {
-            	   return true;
-               } else {
-            	   return false;
-               }
-                
-            }catch(SQLException ex) {
-                ex.printStackTrace();
-            }
-            return false;
+        public boolean hasPersonNumber(int idperson, String number){        	
+        	String checkSql = "SELECT * FROM search WHERE idperson=? AND number=?";
+            boolean result = false;
+        	try(PreparedStatement pstmt = queryRunner.getDataSource().getConnection().prepareStatement(checkSql))
+        	{
+        		pstmt.setInt(1, idperson);
+        		pstmt.setString(2, number);
+        		ResultSet rs = pstmt.executeQuery();
+        		result = rs.next();
+        		rs.close();
+        	}catch(SQLException ex)
+        	{
+        		ex.printStackTrace();
+        	}
+        	
+            return result;
         }
         
         public void addPersonInt(String number, int idperson)
@@ -304,5 +301,6 @@ public class ReportDAO {
 				e.printStackTrace();
 			}
         }
+                
 }
 
