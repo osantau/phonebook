@@ -80,6 +80,7 @@ public class LoginServlet extends HttpServlet {
 					request.getRequestDispatcher(PagesHelper.LOGIN_PAGE).forward(request, response);
 				} else {
 					session.setAttribute("user", user);
+//					response.sendRedirect(request.getServletContext().getContextPath());
 					request.getRequestDispatcher("index.jsp").forward(request, response);					
 				}
 			}

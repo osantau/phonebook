@@ -53,13 +53,13 @@ public class BranchOfficeTest {
 //		bTest.searchBranch();
 //		bTest.searchOffice();
 //		bTest.searchPerson();
-		bTest.personHasNumber(296, "118");
+		bTest.personHasNumber(296, "154",9);
 	
 	}
 
-	public void personHasNumber(int idperson, String number)
+	public void personHasNumber(int idperson, String number, int idoffice)
 	{
-		System.out.println(reportDAO.hasPersonNumber(idperson, number));
+		System.out.println(reportDAO.hasPersonNumber(idperson, number, idoffice));
 	}
 	public void searchPerson() {
 		List<PersonBean> lst = reportDAO.searchPerson("sant");

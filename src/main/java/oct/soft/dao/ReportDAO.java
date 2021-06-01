@@ -2,18 +2,15 @@ package oct.soft.dao;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -262,22 +259,18 @@ public class ReportDAO {
 		return data;
 	}
         
-        public boolean hasPersonNumber(int idperson, String number){        	
-        	String checkSql = "SELECT * FROM search WHERE idperson=? AND number=?";
-            boolean result = false;
-        	try(PreparedStatement pstmt = queryRunner.getDataSource().getConnection().prepareStatement(checkSql))
-        	{
-        		pstmt.setInt(1, idperson);
-        		pstmt.setString(2, number);
-        		ResultSet rs = pstmt.executeQuery();
-        		result = rs.next();
-        		rs.close();
-        	}catch(SQLException ex)
-        	{
-        		ex.printStackTrace();
-        	}
-        	
-            return result;
+        public boolean hasPersonNumber(int idperson, String number, int idoffice){        	
+        	String checkSql = "select count(idperson) cnt from person where idperson=? and telint_id = (select idphone from phone where number=? and idoffice=?) ";
+        	Long result=0L;
+        	ScalarHandler<Long> scalarHandler = new ScalarHandler<Long>();
+        	try {
+				result = queryRunner.query(checkSql, scalarHandler, idperson, number, idoffice);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	System.out.printf("idperson : %d, number : %s, idoffice: %d, result: %d\n",idperson,number,idoffice,result);
+            return result >=1 ? true : false;
         }
         
         public void addPersonInt(String number, int idperson)

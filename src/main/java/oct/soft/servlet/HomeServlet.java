@@ -94,8 +94,7 @@ public class HomeServlet extends HttpServlet {
 		    	{
 	    		 String basePath = request.getServletContext().getContextPath();
 	    		 	User user = (User)(request.getSession().getAttribute("user"));
-	    		 	boolean userIsAuthenticated = (user!=null && user.isAuthenticated());
-	    		 	System.out.println(userIsAuthenticated);
+	    		 	boolean userIsAuthenticated = (user!=null && user.isAuthenticated());	    		 
 	    		 	String keyword = request.getParameter("keyword");
 	    		 	List<BirouBean> filiale = reportDAO.searchBranch(keyword);
 	    		 	List<BirouBean> birouri = reportDAO.searchOffice(keyword);
@@ -179,7 +178,7 @@ public class HomeServlet extends HttpServlet {
 							sb.append("<li>").append(p.getBranch()).append(" - ").append(p.getName()).append(": <b>");
                                                         for(String number : p.getNumber().split(","))
                                                         {
-                                                            if(number.length() == 3){
+                                                           /* if(number.length() == 3){
                                                              
                                                             	if(reportDAO.hasPersonNumber(Integer.valueOf(p.getIdperson()), number))
                                                             	{
@@ -191,14 +190,32 @@ public class HomeServlet extends HttpServlet {
                                                             		}
                                                             	} else if(userIsAuthenticated)
                                                             	{
-                                                            		sb.append("<span class=\"nrint\"><a href=\"#\" style=\"cursor:hand; text-decoration:none\">"+number+"</a><input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
-                                                            	} else {
+                                                            		sb.append("<span class=\"nrint\"><a href=\"#\" style=\"cursor:hand; text-decoration:none\">"+number+"</a><input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");                                                            	
                                                             		sb.append("<span class=\"nrint\">&nbsp;"+number+"&nbsp;<input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
                                                             	}
                                                             	
                                                             } else {
                                                             	sb.append("&nbsp;&nbsp;").append(number).append("&nbsp;&nbsp;");
-                                                            }
+                                                            }*/
+                                                        	
+                                                                boolean isNumAllocated = reportDAO.hasPersonNumber(Integer.valueOf(p.getIdperson()), number,Integer.valueOf(p.getIdoffice()));                                                		
+                                                        		sb.append("<span class=\"nrint\" ");
+                                                        		if(isNumAllocated && !userIsAuthenticated)
+                                                        		{
+                                                        		sb.append("style=\"color: red;\"");
+                                                        		}
+                                                        		sb.append(">&nbsp;"+number+"&nbsp;<input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
+                                                        		
+                                                        		if(userIsAuthenticated && isNumAllocated)
+                                                        		{
+                                                        			sb.append("<a href=\"#\" class=\"remphone\" style=\"cursor:hand;\">[-]<input type=\"hidden\" id=\"remp_id\" value=\""+p.getIdperson()+"\"/>\r\n"
+                                                        					+ "                                            <input type=\"hidden\" id=\"remnum\" value=\""+number+"\"/></a>");	
+                                                        		} else if(userIsAuthenticated && !isNumAllocated)
+                                                        		{
+                                                        			sb.append("<span class=\"nrint\"><a href=\"#\" style=\"cursor:hand; text-decoration:none\">"+number+"</a><input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
+                                                        		}
+                                                        	         	
+                                                        	
                                                         }
                                                         sb.append("</b></li>");
                                                         
