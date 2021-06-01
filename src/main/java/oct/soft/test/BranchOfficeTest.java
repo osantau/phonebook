@@ -52,10 +52,15 @@ public class BranchOfficeTest {
 //		bTest.reportBirouri();
 //		bTest.searchBranch();
 //		bTest.searchOffice();
-		bTest.searchPerson();
+//		bTest.searchPerson();
+		bTest.personHasNumber(296, "118");
 	
 	}
 
+	public void personHasNumber(int idperson, String number)
+	{
+		System.out.println(reportDAO.hasPersonNumber(idperson, number));
+	}
 	public void searchPerson() {
 		List<PersonBean> lst = reportDAO.searchPerson("sant");
 	

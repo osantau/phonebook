@@ -261,19 +261,48 @@ public class ReportDAO {
 	}
         
         public boolean hasPersonNumber(int idperson, String number){
-            String checkSql = "SELECT fname, lname FROM `person` "
-                    + " WHERE idperson=? and telint_id = (select telint_id from phone where number=?)";
+            String checkSql = "SELECT p.fname FROM person p "
+            		+ " join phone t on t.idphone = p.telint_id "
+                    + " WHERE p.idperson=? and t.number=? limit 1";
             
             try(PreparedStatement pstmt = queryRunner.getDataSource().getConnection().prepareStatement(checkSql)) 
             {
                 pstmt.setInt(1, idperson);
                 pstmt.setString(2, number);
                 ResultSet rs = pstmt.executeQuery();
-                return rs.next();
+               if(rs.next())
+               {
+            	   return true;
+               } else {
+            	   return false;
+               }
+                
             }catch(SQLException ex) {
                 ex.printStackTrace();
             }
             return false;
+        }
+        
+        public void addPersonInt(String number, int idperson)
+        {
+        	String query = "UPDATE person set telint_id=(select idphone from phone where number=?) where idperson=?";
+        	try {
+				queryRunner.update(query, number, idperson);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        
+        public void removePersonInt(String number, int idperson)
+        {
+        	String query = "UPDATE person set telint_id=0 where idperson=?";
+        	try {
+				queryRunner.update(query, idperson);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
 }
 

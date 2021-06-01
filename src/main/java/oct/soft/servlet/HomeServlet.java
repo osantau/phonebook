@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.mysql.cj.result.IntegerValueFactory;
+
 import oct.soft.dao.ReportDAO;
 import oct.soft.dao.beans.BirouBean;
 import oct.soft.dao.beans.PersonBean;
@@ -20,7 +22,7 @@ import oct.soft.model.User;
 /**
  * Servlet implementation class HomeServlet
  */
-@WebServlet(name = "HomeServlet", urlPatterns = { "/search", "/export" })
+@WebServlet(name = "HomeServlet", urlPatterns = { "/search", "/export","/rempersint","/persnrint" })
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DataSource dataSource = null;
@@ -92,6 +94,8 @@ public class HomeServlet extends HttpServlet {
 		    	{
 	    		 String basePath = request.getServletContext().getContextPath();
 	    		 	User user = (User)(request.getSession().getAttribute("user"));
+	    		 	boolean userIsAuthenticated = (user!=null && user.isAuthenticated());
+	    		 	System.out.println(userIsAuthenticated);
 	    		 	String keyword = request.getParameter("keyword");
 	    		 	List<BirouBean> filiale = reportDAO.searchBranch(keyword);
 	    		 	List<BirouBean> birouri = reportDAO.searchOffice(keyword);
@@ -118,7 +122,7 @@ public class HomeServlet extends HttpServlet {
 	                          .append("</b></td>");	                          
 	                                  
 							
-							if(user!=null && user.isAuthenticated())
+							if(userIsAuthenticated)
 							{
 								sb.append("<td>")
 								.append("<a href=\"")
@@ -150,7 +154,7 @@ public class HomeServlet extends HttpServlet {
 							.append("<td>").append(b.getBranch()).append("</td>")
 							.append("</td><td align=\"center\"><b>").append(b.getNumber()).append("</b></td>");
 							
-							if(user!=null && user.isAuthenticated())
+							if(userIsAuthenticated)
 							{
 								sb.append("<td>")
 								.append("<a href=\"")
@@ -177,16 +181,118 @@ public class HomeServlet extends HttpServlet {
                                                         {
                                                             if(number.length() == 3){
                                                              
+                                                            	if(reportDAO.hasPersonNumber(Integer.valueOf(p.getIdperson()), number))
+                                                            	{
+                                                            		sb.append("<span class=\"nrint\" style=\"color: red;\">&nbsp;"+number+"&nbsp;<input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
+                                                            		if(userIsAuthenticated)
+                                                            		{
+                                                            			sb.append("<a href=\"#\" class=\"remphone\" style=\"cursor:hand;\">[-]<input type=\"hidden\" id=\"remp_id\" value=\""+p.getIdperson()+"\"/>\r\n"
+                                                            					+ "                                            <input type=\"hidden\" id=\"remnum\" value=\""+number+"\"/></a>");
+                                                            		}
+                                                            	} else if(userIsAuthenticated)
+                                                            	{
+                                                            		sb.append("<span class=\"nrint\"><a href=\"#\" style=\"cursor:hand; text-decoration:none\">"+number+"</a><input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
+                                                            	} else {
+                                                            		sb.append("<span class=\"nrint\">&nbsp;"+number+"&nbsp;<input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
+                                                            	}
+                                                            	
+                                                            } else {
+                                                            	sb.append("&nbsp;&nbsp;").append(number).append("&nbsp;&nbsp;");
                                                             }
                                                         }
-                                                        sb.append("</li>");
+                                                        sb.append("</b></li>");
+                                                        
+                                                        if(p.getTelserv()!=null && !p.getTelserv().isEmpty())
+                                                        {
+                                                        	sb.append("<li>Tel serv: <b>"+p.getTelserv()+"</b></li>");
+                                                        } else if(p.getTelfix()!=null && !p.getTelfix().isEmpty())
+                                                        {
+                                                        	sb.append("<li>Tel fix: <b>"+p.getTelfix()+"</b></li>");
+                                                        } else if(p.getTelmobil()!=null && !p.getTelmobil().isEmpty())
+                                                        {
+                                                        	sb.append("<li>Tel mobil: <b>"+p.getTelmobil()+"</b></li>");
+                                                        }
+
 							sb.append("</ul></td>");
+							
+							if(userIsAuthenticated)
+							{
+								sb.append("<td><a href=\"").append(basePath).append("/person?action=edit&idperson=").append(p.getIdperson())
+								   .append("\" title=\"Modifica\" style=\"text-decoration:none;\">")
+								   .append("<img src=\"").append(basePath).append("/assets/images/pencil.png\" border=\"0\"/>")
+								   .append("</a></td>");
+								
+							}
+							sb.append("</tr>");
 						}
 						
 						sb.append("</tbody></table>");						
+						// javascript functionality
+						sb.append("<input type=\"hidden\" id=\"base_url\" value=\""+basePath+"\"/>");
+						sb.append("<div id=\"info\" style=\"text-weight: bolder;\"></div>");
+						
+						if(userIsAuthenticated)
+						{
+							sb.append("<script type=\"text/javascript\">   \r\n"
+									+ "                    $(\".remphone\").click(function(e){\r\n"
+									+ "                    var remp_id=$(this).find(\"#remp_id\").val();\r\n"
+									+ "                    var remnum=$(this).find(\"#remnum\").val();\r\n"
+									+ "                    var base_url=$(\"#base_url\").val()+\"/rempersint\";  \r\n"
+									+ "                    var base_url2=$(\"#base_url\").val()+\"/search\";\r\n"
+									+ "                    var term=$(\"#faq_search_input\").val();\r\n"
+									+ "                            $.post(\r\n"
+									+ "                                base_url,{remnum: remnum, rempers_id: remp_id},function(response){\r\n"
+									+ "                              //  $(\"#info\").html(response).show();\r\n"
+									+ "                                          }\r\n"
+									+ "                                );\r\n"
+									+ "                            $.ajax({\r\n"
+									+ "                                            type: \"POST\",\r\n"
+									+ "                                            url: base_url2,\r\n"
+									+ "                                            data: \"keyword=\"+term,\r\n"
+									+ "                                            success: function(response){\r\n"
+									+ "                                                        $(\".gbox\").html(response).show();\r\n"
+									+ "\r\n"
+									+ "                                                                            }   \r\n"
+									+ "                                        });\r\n"
+									+ "                               \r\n"
+									+ "                     });\r\n"
+									+ "                    $(\".nrint\").click(function(){\r\n"
+									+ "                           var person_id=$(this).find(\"#person_id\").val();\r\n"
+									+ "                           var numar=$(this).text();\r\n"
+									+ "                           var base_url=$(\"#base_url\").val()+\"/persnrint\";  \r\n"
+									+ "                           var base_url2=$(\"#base_url\").val()+\"/search\";\r\n"
+									+ "                           var term=$(\"#faq_search_input\").val();\r\n"
+									+ "									console.log(base_url);"
+									+ "                             $.post(\r\n"
+									+ "                                base_url,{numar: numar, person_id: person_id},function(response){\r\n"
+									+ "                              //  $(\"#info\").html(response).show();\r\n"
+									+ "                                                    }\r\n"
+									+ "                                );\r\n"
+									+ "                       $.ajax({\r\n"
+									+ "                                            type: \"POST\",\r\n"
+									+ "                                            url: base_url2,\r\n"
+									+ "                                            data: \"keyword=\"+term,\r\n"
+									+ "                                            success: function(response){\r\n"
+									+ "                                                        $(\".gbox\").html(response).show();\r\n"
+									+ "\r\n"
+									+ "                                                                            }   \r\n"
+									+ "                                        });           \r\n"
+									+ "                              });                                            \r\n"
+									+ "                    </script>");
+						}
+						
 						
 						response.getWriter().write(sb.toString());
 					}
+		    	} else if(path.equals("/persnrint"))
+		    	{
+		    		int idperson  = Integer.valueOf(request.getParameter("person_id"));
+		    		String number = request.getParameter("numar");
+		    		reportDAO.addPersonInt(number, idperson);
+		    	} else if(path.equals("/rempersint")) {
+		    		int idperson  = Integer.valueOf(request.getParameter("rempers_id"));
+		    		String number = request.getParameter("remnum");
+		    		reportDAO.removePersonInt(number, idperson);
 		    	}
 	     }
 	}

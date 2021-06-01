@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		String method = request.getMethod();
 		String path = request.getServletPath();
 		if (method.equals("GET")) {
@@ -80,7 +80,7 @@ public class LoginServlet extends HttpServlet {
 					request.getRequestDispatcher(PagesHelper.LOGIN_PAGE).forward(request, response);
 				} else {
 					session.setAttribute("user", user);
-					request.getRequestDispatcher("index.jsp").forward(request, response);
+					request.getRequestDispatcher("index.jsp").forward(request, response);					
 				}
 			}
 

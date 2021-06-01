@@ -24,6 +24,7 @@ public class PersonBean {
 	private String telserv;
 	private String telfix;
 	private String telmobil;
+	private String idoffice;
 	
 	public String getNume() {
 		return nume;
@@ -103,12 +104,21 @@ public class PersonBean {
 	public void setTelmobil(String telmobil) {
 		this.telmobil = telmobil;
 	}
+	
+	
+	public String getIdoffice() {
+		return idoffice;
+	}
+	public void setIdoffice(String idoffice) {
+		this.idoffice = idoffice;
+	}
+
 	@Override
 	public String toString() {
 		return "PersonBean [nume=" + nume + ", prenume=" + prenume + ", numere=" + numere + ", numar_asociat="
 				+ numar_asociat + ", fname=" + fname + ", lname=" + lname + ", name=" + name + ", branch=" + branch
 				+ ", number=" + number + ", idperson=" + idperson + ", telserv=" + telserv + ", telfix=" + telfix
-				+ ", telmobil=" + telmobil + "]\n";
+				+ ", telmobil=" + telmobil + ", idoffice=" + idoffice + "]";
 	}
 	@Override
 	public int hashCode() {
