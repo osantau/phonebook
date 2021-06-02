@@ -268,8 +268,7 @@ public class ReportDAO {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-        	System.out.printf("idperson : %d, number : %s, idoffice: %d, result: %d\n",idperson,number,idoffice,result);
+			}        	
             return result >=1 ? true : false;
         }
         

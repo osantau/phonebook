@@ -198,23 +198,25 @@ public class HomeServlet extends HttpServlet {
                                                             	sb.append("&nbsp;&nbsp;").append(number).append("&nbsp;&nbsp;");
                                                             }*/
                                                         	
-                                                                boolean isNumAllocated = reportDAO.hasPersonNumber(Integer.valueOf(p.getIdperson()), number,Integer.valueOf(p.getIdoffice()));                                                		
-                                                        		sb.append("<span class=\"nrint\" ");
-                                                        		if(isNumAllocated && !userIsAuthenticated)
+                                                                boolean isNumAllocated = reportDAO.hasPersonNumber(Integer.valueOf(p.getIdperson()), number,Integer.valueOf(p.getIdoffice()));
+                                                                
+                                                        		if(isNumAllocated)
                                                         		{
-                                                        		sb.append("style=\"color: red;\"");
+                                                        			sb.append("<span class=\"nrint\" style=\"color: red;\">&nbsp;"+number+"&nbsp;<input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
+                                                        			if(userIsAuthenticated)
+                                                        			{
+                                                        				sb.append("<a href=\"#\" class=\"remphone\" style=\"cursor:hand;\">[-]<input type=\"hidden\" id=\"remp_id\" value=\""+p.getIdperson()+"\"/>\r\n"
+                                                            					+ "                                            <input type=\"hidden\" id=\"remnum\" value=\""+number+"\"/></a>");
+                                                        			}
+                                                        		} else {
+                                                        			if(userIsAuthenticated)
+                                                        			{
+                                                        				sb.append("<span class=\"nrint\"><a href=\"#\" style=\"cursor:hand; text-decoration:none\">"+number+"</a><input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
+                                                        			} else {
+                                                        			sb.append("&nbsp;&nbsp;").append(number).append("&nbsp;&nbsp;");
+                                                        			}
                                                         		}
-                                                        		sb.append(">&nbsp;"+number+"&nbsp;<input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
-                                                        		
-                                                        		if(userIsAuthenticated && isNumAllocated)
-                                                        		{
-                                                        			sb.append("<a href=\"#\" class=\"remphone\" style=\"cursor:hand;\">[-]<input type=\"hidden\" id=\"remp_id\" value=\""+p.getIdperson()+"\"/>\r\n"
-                                                        					+ "                                            <input type=\"hidden\" id=\"remnum\" value=\""+number+"\"/></a>");	
-                                                        		} else if(userIsAuthenticated && !isNumAllocated)
-                                                        		{
-                                                        			sb.append("<span class=\"nrint\"><a href=\"#\" style=\"cursor:hand; text-decoration:none\">"+number+"</a><input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
-                                                        		}
-                                                        	         	
+                                                        		    	
                                                         	
                                                         }
                                                         sb.append("</b></li>");
