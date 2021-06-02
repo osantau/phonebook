@@ -272,11 +272,11 @@ public class ReportDAO {
             return result >=1 ? true : false;
         }
         
-        public void addPersonInt(String number, int idperson)
+        public void addPersonInt(String number, int idperson,int idoffice)
         {
-        	String query = "UPDATE person set telint_id=(select idphone from phone where number=?) where idperson=?";
+        	String query = "UPDATE person set telint_id=(select idphone from phone where number=? and idoffice= ?) where idperson=?";
         	try {
-				queryRunner.update(query, number, idperson);
+				queryRunner.update(query, number, idoffice,idperson);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

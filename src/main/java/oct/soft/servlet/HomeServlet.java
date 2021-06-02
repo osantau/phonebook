@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import com.mysql.cj.result.IntegerValueFactory;
-
 import oct.soft.dao.ReportDAO;
 import oct.soft.dao.beans.BirouBean;
 import oct.soft.dao.beans.PersonBean;
@@ -211,9 +209,10 @@ public class HomeServlet extends HttpServlet {
                                                         		} else {
                                                         			if(userIsAuthenticated)
                                                         			{
-                                                        				sb.append("<span class=\"nrint\"><a href=\"#\" style=\"cursor:hand; text-decoration:none\">"+number+"</a><input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson()+"\"/></span>&nbsp;");
+                                                        				sb.append("<span class=\"nrint\"><a href=\"#\" style=\"cursor:hand; text-decoration:none\">"+number+"</a><input type=\"hidden\" id=\"person_id\" value=\""+p.getIdperson().trim()+"\"/>"
+                                                                                                + "<input type=\"hidden\" id=\"office_id\" value=\""+p.getIdoffice().trim()+"\"/></span>&nbsp;");
                                                         			} else {
-                                                        			sb.append("&nbsp;&nbsp;").append(number).append("&nbsp;&nbsp;");
+                                                                                    sb.append("&nbsp;&nbsp;").append(number).append("&nbsp;&nbsp;");
                                                         			}
                                                         		}
                                                         		    	
@@ -277,13 +276,14 @@ public class HomeServlet extends HttpServlet {
 									+ "                     });\r\n"
 									+ "                    $(\".nrint\").click(function(){\r\n"
 									+ "                           var person_id=$(this).find(\"#person_id\").val();\r\n"
+                                                                        + "                           var office_id=$(this).find(\"#office_id\").val();\r\n"
 									+ "                           var numar=$(this).text();\r\n"
 									+ "                           var base_url=$(\"#base_url\").val()+\"/persnrint\";  \r\n"
 									+ "                           var base_url2=$(\"#base_url\").val()+\"/search\";\r\n"
 									+ "                           var term=$(\"#faq_search_input\").val();\r\n"
-									+ "									console.log(base_url);"
+									+ "                           console.log(numar,person_id, office_id);"
 									+ "                             $.post(\r\n"
-									+ "                                base_url,{numar: numar, person_id: person_id},function(response){\r\n"
+									+ "                                base_url,{numar: numar, person_id: person_id, office_id: office_id},function(response){\r\n"
 									+ "                              //  $(\"#info\").html(response).show();\r\n"
 									+ "                                                    }\r\n"
 									+ "                                );\r\n"
@@ -304,10 +304,11 @@ public class HomeServlet extends HttpServlet {
 						response.getWriter().write(sb.toString());
 					}
 		    	} else if(path.equals("/persnrint"))
-		    	{
+		    	{                            
 		    		int idperson  = Integer.valueOf(request.getParameter("person_id"));
 		    		String number = request.getParameter("numar");
-		    		reportDAO.addPersonInt(number, idperson);
+		    		int idOffice = Integer.valueOf(request.getParameter("office_id"));
+		    		reportDAO.addPersonInt(number, idperson,idOffice);
 		    	} else if(path.equals("/rempersint")) {
 		    		int idperson  = Integer.valueOf(request.getParameter("rempers_id"));
 		    		String number = request.getParameter("remnum");
