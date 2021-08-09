@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebListener;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import oct.soft.db.util.MyDataSource;
+
 /**
  * Application Lifecycle Listener implementation class MyServletListener
  *
@@ -47,34 +49,9 @@ public class MyServletListener implements ServletContextListener {
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
-    public void contextInitialized(ServletContextEvent sce)  {
-        	
-			try {
+    public void contextInitialized(ServletContextEvent sce)  {        	
 				ServletContext application = sce.getServletContext();
-
-				ComboPooledDataSource datasource = new ComboPooledDataSource();
-				datasource.setDriverClass("com.mysql.cj.jdbc.Driver");
-				datasource.setJdbcUrl("jdbc:mysql://localhost/telefoane?useSSL=false");
-				datasource.setUser("root");
-				datasource.setPassword("root");
-
-				// Optional Settings
-				
-				datasource.setMinPoolSize(10);			
-				datasource.setMaxPoolSize(20);
-				datasource.setAcquireIncrement(1);
-				datasource.setMaxStatements(50);
-				datasource.setIdleConnectionTestPeriod(3000);
-				datasource.setPreferredTestQuery("select 1");
-				Statement stmt = datasource.getConnection().createStatement();
-				stmt.execute("SELECT count(*) from person");
-				stmt.close();
-				application.setAttribute("dataSource", datasource);
-			} catch (PropertyVetoException | SQLException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
-			}
-	
+				application.setAttribute("dataSource", MyDataSource.getDataSource());
     	
 		
     }

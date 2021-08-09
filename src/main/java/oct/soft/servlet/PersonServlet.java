@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import com.mysql.cj.result.IntegerValueFactory;
-
 import oct.soft.dao.OfficeDAO;
 import oct.soft.dao.PersonDAO;
 import oct.soft.dao.PhoneDAO;
