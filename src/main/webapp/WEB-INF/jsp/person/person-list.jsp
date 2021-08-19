@@ -13,7 +13,7 @@
         <display:column title="Nume"><c:out value="${row.fname }"/></display:column>
         <display:column title="Prenume"><c:out value="${row.lname }"/></display:column>
         <display:column title="Birou"><c:out value="${row.birou }"/></display:column>
-        <display:column title="Birou"><c:out value="${row.filiala }"/></display:column>
+        <display:column title="Filiala"><c:out value="${row.filiala }"/></display:column>
         <display:column title="Edit"><a href="<c:url value="/person" />?action=edit&idperson=${row.idperson}">
         <img src="${pageContext.servletContext.contextPath}/assets/images/pencil.png" border="0"/>
         <a href="<c:url value="/person" />?action=delete&idperson=${row.idperson}">

@@ -17,7 +17,7 @@
         		<tr>
         			<td>${person.fname}</td>
         			<td>${person.lname}</td>
-        			<td><a href="<c:url value="/person-edit" />?idperson=${person.idperson}">Modifica</a></td>
+        			<td><a href="<c:url value="/person" />?action=edit&idperson=${person.idperson}">Modifica</a></td>
         		</tr>
         	</c:forEach>
         	</table>

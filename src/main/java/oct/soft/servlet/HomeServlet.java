@@ -306,7 +306,9 @@ public class HomeServlet extends HttpServlet {
 		    	} else if(path.equals("/persnrint"))
 		    	{                            
 		    		int idperson  = Integer.valueOf(request.getParameter("person_id"));
+		    		System.out.println(request.getParameter("numar").replaceAll("[^0-9.]", "").trim());
 		    		String number = request.getParameter("numar");
+		    		System.out.println("Office id "+request.getParameter("office_id"));
 		    		int idOffice = Integer.valueOf(request.getParameter("office_id"));
 		    		reportDAO.addPersonInt(number, idperson,idOffice);
 		    	} else if(path.equals("/rempersint")) {

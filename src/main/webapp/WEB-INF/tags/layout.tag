@@ -122,7 +122,7 @@
                                             url: "${pageContext.servletContext.contextPath}/search",
                                             data: "keyword=" + term,
                                             success: function (response)
-                                            {
+                                            {												
                                                 $('.gbox').html(response).show();
                                             }
                                         });
