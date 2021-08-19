@@ -41,13 +41,7 @@
 					style="background-color: #A9F5A9;" />
 </td>
 </tr>
-<!--
-<tr>
-<td>Confirmare parola: </td>
-<td>
-<input type="text" name="password"  value="<?php echo set_value('email');?>" style="background-color: #A9F5A9;"/>
-</td>
-</tr> -->
+
 <tr>
 <td>Nume utilizator: </td>
 <td>

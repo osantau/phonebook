@@ -94,7 +94,7 @@
 </tr>
 <tr>
 <td></td><td align="right"><input type="submit" value="Adauga"/>&nbsp;
-        <a href="<?php echo base_url()?>person" style="text-decoration: none;">
+        <a href="<c:url value="person"/>" style="text-decoration: none;">
             <input type="button" value="Cancel"/> 
                  </a> </td>
 </tr>
