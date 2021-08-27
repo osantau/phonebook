@@ -27,7 +27,7 @@ public class MyDataSource {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			datasource.setJdbcUrl("jdbc:mysql://localhost/telefoane");
+			datasource.setJdbcUrl("jdbc:mysql://localhost/phonebook");
 			datasource.setUser("root");
 			datasource.setPassword("root");
 
