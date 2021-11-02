@@ -1,12 +1,8 @@
 package oct.soft.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListResourceBundle;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -16,7 +12,6 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import oct.soft.model.Office;
-import oct.soft.model.Person;
 
 public class OfficeDAO {
 	  private QueryRunner queryRunner;
@@ -76,20 +71,7 @@ public class OfficeDAO {
 	    {	    		    	
 	    	Map<Office, List<Office>> data = new LinkedHashMap<Office, List<Office>>();	    	
 	    	BranchDAO branchDAO = new BranchDAO(queryRunner.getDataSource());
-	    	List<Office> branches =branchDAO.branchList();
-	    	StringBuilder sb = new StringBuilder("<select name =\"office\">\n");
-	    	/*branches.forEach(branch ->{
-	    		sb.append("<option value=\"10\" disabled=\"disabled\" style=\"font-weight: bold;\">").append(branch.getName().toUpperCase()).append("</option>\n");
-	    		List<Office> offices = branchDAO.getOfficesByBranch(branch.getIdoffice());
-	    		offices.forEach(office ->{
-	    			sb.append("<option value=\"").append(office.getIdoffice())
-	    			.append("\" style=\"margin-left: 15px;\">").append(office.getName()).append("</option>\n");
-	    		});
-	    	});
-	    	
-	    	sb.append("</select>"); 
-	    	return sb.toString();*/
-	    	
+	    	List<Office> branches =branchDAO.branchList();	    		   	    	
 	    	List<Office> personOffices = getOfficesByPerson(idperson);
 	    	branches.forEach(branch ->{	    	    		
 	    		List<Office> tempList = branchDAO.getOfficesByBranch(branch.getIdoffice());

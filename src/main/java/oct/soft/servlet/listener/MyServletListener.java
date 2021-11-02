@@ -1,9 +1,6 @@
 package oct.soft.servlet.listener;
 
-import java.beans.PropertyVetoException;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

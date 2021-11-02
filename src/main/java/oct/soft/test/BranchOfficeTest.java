@@ -1,10 +1,7 @@
 package oct.soft.test;
 
 import java.io.FileOutputStream;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.sql.DataSource;
 
@@ -20,7 +17,7 @@ import oct.soft.dao.UserDAO;
 import oct.soft.dao.beans.BirouBean;
 import oct.soft.dao.beans.PersonBean;
 import oct.soft.db.util.MyDataSource;
-import oct.soft.model.Person;
+import oct.soft.model.Person;	
 
 public class BranchOfficeTest {
 

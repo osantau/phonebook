@@ -5,20 +5,16 @@
  */
 package oct.soft.dao;
 
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
-import oct.soft.db.util.MyDataSource;
-import oct.soft.model.Office;
-import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+
+import oct.soft.model.Office;
 
 /**
  *

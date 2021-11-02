@@ -12,7 +12,6 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import oct.soft.model.Office;
 import oct.soft.model.Person;
 
 public class PersonDAO {

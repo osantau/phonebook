@@ -27,6 +27,10 @@ import oct.soft.validator.MyValidator;
 public class BranchServlet extends HttpServlet {
      
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 138573764923894626L;
+	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -47,7 +51,7 @@ public class BranchServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {               
         String method = request.getMethod();
-        String path = request.getServletPath();        
+//        String path = request.getServletPath();        
         if(method.equals("GET")) {
             String editId = request.getParameter("edit");
             boolean add = request.getParameterMap().keySet().contains("add");            

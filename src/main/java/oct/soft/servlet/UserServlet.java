@@ -11,7 +11,6 @@ import javax.sql.DataSource;
 
 import oct.soft.dao.UserDAO;
 import oct.soft.helpers.PagesHelper;
-import oct.soft.model.Person;
 import oct.soft.model.User;
 import oct.soft.validator.MyValidator;
 
@@ -38,7 +37,7 @@ public class UserServlet extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String method = request.getMethod();		
-		String path = request.getServletPath();
+//		String path = request.getServletPath();
 		
 		if (method.equals("GET")) {
 			String action = request.getParameter("action");

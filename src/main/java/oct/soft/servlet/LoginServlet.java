@@ -6,6 +6,7 @@
 package oct.soft.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-
-import org.apache.commons.codec.binary.Base64;
 
 import oct.soft.dao.UserDAO;
 import oct.soft.helpers.PagesHelper;
@@ -29,6 +28,10 @@ import oct.soft.validator.MyValidator;
 @WebServlet(name = "LoginServlet", urlPatterns = { "/login", "/logout" })
 public class LoginServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 995007341653126144L;
 	DataSource dataSource = null;
 	UserDAO userDAO = null;
 
