@@ -6,5 +6,9 @@
 	<display-name>Telefoane</display-name>
 	<session-config>
 		<session-timeout>30</session-timeout>
-	</session-config>	 
+	</session-config>
+	<context-param>
+	<param-name>dbProperties</param-name>
+	<param-value>conf/db.properties</param-value>
+	</context-param>	 
 </web-app>

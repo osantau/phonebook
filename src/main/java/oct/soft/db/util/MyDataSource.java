@@ -6,6 +6,7 @@
 package oct.soft.db.util;
 
 import java.beans.PropertyVetoException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -38,8 +39,33 @@ public class MyDataSource {
 			datasource.setAcquireIncrement(1);
 			datasource.setMaxStatements(50);
 			datasource.setIdleConnectionTestPeriod(3000);
-			datasource.setPreferredTestQuery("select version()");	
+			datasource.setPreferredTestQuery("select version()");			
+		}
+
+		return datasource;
+	}
+	
+	public static DataSource getDataSource(Properties dbConfig) {
+		if (datasource == null) {
+			datasource = new ComboPooledDataSource();
+			try {
+				datasource.setDriverClass(dbConfig.getProperty("JDBC_DRIVER"));
+			} catch (PropertyVetoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			datasource.setJdbcUrl(dbConfig.getProperty("JDBC_URL"));
+			datasource.setUser(dbConfig.getProperty("JDBC_USER"));
+			datasource.setPassword(dbConfig.getProperty("JDBC_PASSWORD"));
+
+			// Optional Settings
 			
+			datasource.setMinPoolSize(10);			
+			datasource.setMaxPoolSize(20);
+			datasource.setAcquireIncrement(1);
+			datasource.setMaxStatements(50);
+			datasource.setIdleConnectionTestPeriod(3000);
+			datasource.setPreferredTestQuery("select version()");			
 		}
 
 		return datasource;

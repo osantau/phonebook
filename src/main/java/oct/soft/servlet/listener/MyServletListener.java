@@ -1,6 +1,9 @@
 package oct.soft.servlet.listener;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -47,8 +50,17 @@ public class MyServletListener implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent sce)  {        	
-				ServletContext application = sce.getServletContext();
-				application.setAttribute("dataSource", MyDataSource.getDataSource());
+				ServletContext application = sce.getServletContext();	
+				InputStream input = application.getResourceAsStream("/WEB-INF/conf/db.properties");
+				Properties dbConfig = new Properties();
+				try {
+					dbConfig.load(input);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(dbConfig);
+				application.setAttribute("dataSource", MyDataSource.getDataSource(dbConfig));
     	
 		
     }
