@@ -145,7 +145,7 @@
 					<version>9.4.34.v20201102</version>
 					<configuration>
 						<webApp>
-							<contextPath>/</contextPath>
+							<contextPath>/phonebook</contextPath>
 						</webApp>
 					</configuration>
 				</plugin>
