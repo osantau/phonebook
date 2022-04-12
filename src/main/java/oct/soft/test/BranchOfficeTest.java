@@ -17,6 +17,7 @@ import oct.soft.dao.UserDAO;
 import oct.soft.dao.beans.BirouBean;
 import oct.soft.dao.beans.PersonBean;
 import oct.soft.db.util.MyDataSource;
+import oct.soft.model.Office;
 import oct.soft.model.Person;	
 
 public class BranchOfficeTest {
@@ -39,18 +40,9 @@ public class BranchOfficeTest {
 
 	public static void main(String[] args) throws Exception {
 		BranchOfficeTest bTest = new BranchOfficeTest();
-//		bTest.getOffices();
-//		bTest.testPersonWithOfficeAndBranch();
-//		bTest.testSavePersonAndReturnId();
-//		bTest.testGetOfficeCombo();
-//		bTest.officeByPersonId();
-//		bTest.usersGetAll();			
-//		bTest.testAuthentication();
-//		bTest.reportBirouri();
-//		bTest.searchBranch();
-//		bTest.searchOffice();
-//		bTest.searchPerson();
-		bTest.personHasNumber(296, "154",9);
+		Office branch = new Office();
+		branch.setName("0a1b");
+		bTest.branchDAO.saveOrUpdate(branch);
 	
 	}
 
