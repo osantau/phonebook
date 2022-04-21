@@ -8,7 +8,11 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 	<context-param>
-	<param-name>dbProperties</param-name>
-	<param-value>conf/db.properties</param-value>
-	</context-param>	 
+		<param-name>dbProperties</param-name>
+		<param-value>conf/db.properties</param-value>
+	</context-param>
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/rest</param-value>
+	</context-param>
 </web-app>
