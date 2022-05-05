@@ -51,7 +51,7 @@ public class ReportDAO {
 				+ "                    join offices_person on (person.idperson = offices_person.idperson)\n"
 				+ "                    join office on(office.idoffice = offices_person.idoffice)\n"
 				+ "                    join phone on(phone.idoffice = office.idoffice and phone.interior=1) \n"
-				+ "                    group by fname,lname";
+				+ "                    group by fname,lname,telint_id";
 		List<PersonBean> data = new LinkedList<>();
 
 		BeanListHandler<PersonBean> beanListHandler = new BeanListHandler<>(PersonBean.class);
