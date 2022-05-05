@@ -2,6 +2,7 @@ package oct.soft.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -167,7 +168,8 @@ public class HomeServlet extends HttpServlet {
 						sb.append("</tbody></table>");
 						response.getWriter().write(sb.toString());
 					} else if (!persoane.isEmpty()) {
-						sb = new StringBuilder("<div align=\"center\"><table cellspacing=\"5\" style=\"text-align: center;\"><tbody>");
+						int maxNumePrenume = persoane.stream().max(Comparator.comparing(PersonBean::numePrenumeLength)).get().numePrenumeLength()+5;
+						sb = new StringBuilder("<div align=\"center\"><table cellspacing=\""+maxNumePrenume+"\" style=\"text-align: center;\"><tbody>");
 						
 						for(PersonBean p : persoane)
 						{

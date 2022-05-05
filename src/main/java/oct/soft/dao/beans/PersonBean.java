@@ -113,6 +113,9 @@ public class PersonBean {
 		this.idoffice = idoffice;
 	}
 
+	public int numePrenumeLength() {
+		return (getFname()+" "+getLname()).length();
+	}
 	@Override
 	public String toString() {
 		return "PersonBean [nume=" + nume + ", prenume=" + prenume + ", numere=" + numere + ", numar_asociat="

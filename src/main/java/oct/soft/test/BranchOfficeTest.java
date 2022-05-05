@@ -1,6 +1,7 @@
 package oct.soft.test;
 
 import java.io.FileOutputStream;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -40,9 +41,8 @@ public class BranchOfficeTest {
 
 	public static void main(String[] args) throws Exception {
 		BranchOfficeTest bTest = new BranchOfficeTest();
-		Office branch = new Office();
-		branch.setName("0a1b");
-		bTest.branchDAO.saveOrUpdate(branch);
+		List<PersonBean> persons = bTest.reportDAO.searchPerson("sant");
+		
 	
 	}
 
